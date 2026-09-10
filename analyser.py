@@ -52,8 +52,16 @@ def summarize(path):
     events = load_events(path)
     print(f"\n=== {path} ===")
     print(f"Loaded {len(events)} events\n")
+    signin_failure_count = 0
+    access_denied_count = 0
     for event in events:
         print(describe_event(event))
+        if event["errorCode"] == "SigninFailure":
+            signin_failure_count += 1
+        if event["errorCode"] == "AccessDenied":
+            access_denied_count += 1
+    print(f"\nThere are a total of {signin_failure_count} sign in failures")
+    print(f"There are a total of {access_denied_count} access denied")
 
 
 # This block only runs when you execute "python analyser.py" directly,
